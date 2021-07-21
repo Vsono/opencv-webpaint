@@ -8,16 +8,14 @@
                     {{ tab }}
                 </label>
             </div>
-            <component :is="currentTabComponent" class="tab row"></component>
-    </div>
+        </div>
+        <component :is="currentTabComponent" class="tab row"></component>
     </div>
 </template>
 
 <script>
-
 import TabSketch from './tab-sketch.vue'
 import TabSelect from './tab-select.vue'
-
 
 export default {
     name: 'TabEdit',
@@ -34,9 +32,7 @@ export default {
     computed: {
         currentTabComponent() {
             return 'tab-' + this.currentTab.toLowerCase()
-        
-
-}
+        }
     }
 }
 </script>
