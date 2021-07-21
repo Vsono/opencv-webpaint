@@ -64,9 +64,9 @@ export default {
                 return
             let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             
-            //HEAVY
             cv.line(this.$store.state.imgmat, this.lastPos, newPos, [0,0,0,255], 3, cv.LINE_AA)
             this.lastPos = newPos
+
             this.$store.commit('drawImage')
         },
         offsetPosToImgPos(x, y){
