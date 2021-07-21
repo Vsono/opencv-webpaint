@@ -56,8 +56,13 @@ export default {
             this.drawing = true
             this.lastPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
         },
-        stopDrawing(){
+        stopDrawing(e){
             this.drawing = false
+            let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
+            
+            cv.line(this.$store.state.imgmat, this.lastPos, newPos, [0,0,0,255], 3, cv.LINE_AA)
+            
+            this.$store.commit('drawImage')
         },
         drag(e){
             if(!this.drawing)
