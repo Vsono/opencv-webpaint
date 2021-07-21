@@ -1,6 +1,7 @@
 <template>
 <div class="viewport col vh-100">
     <canvas id="main-canvas" @mousewheel="zoom" @mousedown="startDrawing" @mouseup="stopDrawing" @mousemove="drag"></canvas>
+    <div class="scale-indicator">{{ Math.round(scale * 100) }} %</div>
 </div>
 </template>
 
@@ -31,9 +32,10 @@ export default {
     },
     methods: {
         zoom(e){
-            if(this.$store.state.scale < 0.1 && e.wheelDeltaY < 0)
+            if(this.scale < 0.1 && e.wheelDeltaY < 0 || 
+            this.scale > 8 && e.wheelDeltaY > 0)
                 return
-            this.$store.state.scale *= (1 + e.wheelDeltaY * 0.0008)
+            this.scale *= (1 + e.wheelDeltaY * 0.0008)
             let cursorPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             let oldCenterPos = this.$store.state.viewCenterPos
             if(e.wheelDeltaY > 0)
@@ -68,14 +70,23 @@ export default {
             this.$store.commit('drawImage')
         },
         offsetPosToImgPos(x, y){
-            let scale = this.$store.state.scale
             let canvasSize = this.$store.getters.canvasSize
             let centerPos = this.$store.state.viewCenterPos
 
             return new cv.Point(
-                ((x - canvasSize.width / 2) / scale) + centerPos.x,
-                ((y - canvasSize.height / 2) / scale) + centerPos.y
+                ((x - canvasSize.width / 2) / this.scale) + centerPos.x,
+                ((y - canvasSize.height / 2) / this.scale) + centerPos.y
             )
+        }
+    },
+    computed:{
+        scale: { 
+            get(){
+                return this.$store.state.scale
+            },
+            set(val){
+                this.$store.state.scale = val
+            }
         }
     }
 }
@@ -86,6 +97,23 @@ export default {
     background-color: rgb(54, 54, 54);
     width: 100%;
     height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.viewport > * { 
+    position: absolute;
+}
+
+.scale-indicator {
+    color: white;
+    background-color: rgba(20, 20, 20, 0.349);
+    width: 60px;
+    height: 25px;
+    bottom: 10px;
+    text-align: center;
+
 }
 
 #main-canvas {
