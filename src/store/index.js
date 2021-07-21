@@ -7,7 +7,9 @@ export default createStore({
             mainCanvas: undefined,
             imgmat: undefined,
             scale: 1,
-            viewCenterPos: new cv.Point(0, 0)
+            viewCenterPos: new cv.Point(0, 0),
+
+            colorPicked: [0, 0, 0, 255]
         }
     },
     mutations: {
