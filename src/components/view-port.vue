@@ -26,7 +26,7 @@ export default {
     data(){
         return {
             drawing: false,
-            lastPos: new cv.Point(0, 0),
+            lastPos: null,
         }
     },
     methods: {
@@ -37,8 +37,7 @@ export default {
         },
         startDrawing(e){
             this.drawing = true
-            this.lastPos.x = e.offsetX
-            this.lastPos.y = e.offsetY
+            this.lastPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
         },
         stopDrawing(){
             this.drawing = false
@@ -46,13 +45,22 @@ export default {
         drag(e){
             if(!this.drawing)
                 return
-            console.log(e)
-            let newPos = new cv.Point(e.offsetX, e.offsetY)
+            let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             
             //HEAVY
             cv.line(this.$store.state.imgmat, this.lastPos, newPos, [0,0,0,255], 3, cv.LINE_AA)
             this.lastPos = newPos
             this.$store.commit('drawImage')
+        },
+        offsetPosToImgPos(x, y){
+            let scale = this.$store.state.scale
+            let canvasSize = this.$store.getters.canvasSize
+            let centerPos = this.$store.state.viewCenterPos
+
+            return new cv.Point(
+                ((x - canvasSize.width / 2) / scale) + centerPos.x,
+                ((y - canvasSize.height / 2) / scale) + centerPos.y
+            )
         }
     }
 }

@@ -7,7 +7,7 @@ export default createStore({
             mainCanvas: undefined,
             imgmat: undefined,
             scale: 1,
-            viewcenter: new cv.Point(0, 0)
+            viewCenterPos: new cv.Point(0, 0)
         }
     },
     mutations: {
@@ -43,8 +43,8 @@ export default createStore({
             ])
             .then(function(sprs){
                 state.mainCanvas.getContext('2d').drawImage(sprs[0],
-                    state.mainCanvas.width / 2 - (state.viewcenter.x * state.scale),
-                    state.mainCanvas.height / 2 - (state.viewcenter.y * state.scale),
+                    state.mainCanvas.width / 2 - (state.viewCenterPos.x * state.scale),
+                    state.mainCanvas.height / 2 - (state.viewCenterPos.y * state.scale),
                     sprs[0].width * state.scale, sprs[0].height * state.scale)
             })
         },
@@ -53,10 +53,13 @@ export default createStore({
             let cv = state.mainCanvas
     
             state.scale = Math.max(0.1, Math.min(1, cv.width / im.cols, cv.height / im.rows))
-            state.viewcenter.x = state.imgmat.cols / 2
-            state.viewcenter.y = state.imgmat.rows / 2
+            state.viewCenterPos.x = state.imgmat.cols / 2
+            state.viewCenterPos.y = state.imgmat.rows / 2
         }
     },
-    actions: {
+    getters:{
+        canvasSize(state){
+            return {width: state.mainCanvas.width, height: state.mainCanvas.height}
+        }
     }
 })
