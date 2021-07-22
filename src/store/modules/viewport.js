@@ -39,7 +39,7 @@ const mutations = {
         state.canvas_mat = Object.freeze(img)
         state.overlay_mat = Object.freeze(new cv.Mat(state.canvas_mat.rows, state.canvas_mat.cols, cv.CV_8UC4))
     },
-    render(state){
+    renderCanvas(state){
         //clear canvas
         let ctx = state.canvas.getContext('2d')
         ctx.clearRect(0, 0, state.canvas.width, state.canvas.height)
@@ -48,19 +48,31 @@ const mutations = {
         //convert and show image
         Promise.all([
             createImageBitmap(new ImageData(new Uint8ClampedArray(state.canvas_mat.data),
-                state.canvas_mat.cols, state.canvas_mat.rows)),
-            createImageBitmap(new ImageData(new Uint8ClampedArray(state.overlay_mat.data),
-                state.overlay_mat.cols, state.overlay_mat.rows))
+                state.canvas_mat.cols, state.canvas_mat.rows))
         ])
         .then(function(sprs){
             state.canvas.getContext('2d').drawImage(sprs[0],
                 state.canvas.width / 2 - (state.viewCenterPos.x * state.scale),
                 state.canvas.height / 2 - (state.viewCenterPos.y * state.scale),
                 sprs[0].width * state.scale, sprs[0].height * state.scale)
-            state.overlay.getContext('2d').drawImage(sprs[1],
-                state.canvas.width / 2 - (state.viewCenterPos.x * state.scale),
-                state.canvas.height / 2 - (state.viewCenterPos.y * state.scale),
-                sprs[1].width * state.scale, sprs[1].height * state.scale)
+        })
+    },
+    renderOverlay(state){
+        //clear overlay
+        let ctx = state.overlay.getContext('2d')
+        ctx.clearRect(0, 0, state.overlay.width, state.overlay.height)
+
+
+        //convert and show image
+        Promise.all([
+            createImageBitmap(new ImageData(new Uint8ClampedArray(state.overlay_mat.data),
+                state.overlay_mat.cols, state.overlay_mat.rows))
+        ])
+        .then(function(sprs){
+            state.overlay.getContext('2d').drawImage(sprs[0],
+                state.overlay.width / 2 - (state.viewCenterPos.x * state.scale),
+                state.overlay.height / 2 - (state.viewCenterPos.y * state.scale),
+                sprs[0].width * state.scale, sprs[0].height * state.scale)
         })
     },
     resetView(state){
@@ -68,8 +80,8 @@ const mutations = {
         let cv = state.canvas
 
         state.scale = Math.max(0.1, Math.min(1, cv.width / im.cols, cv.height / im.rows))
-        state.viewCenterPos.x = state.canvas_mat.cols / 2
-        state.viewCenterPos.y = state.canvas_mat.rows / 2
+        state.viewCenterPos.x = im.cols / 2
+        state.viewCenterPos.y = im.rows / 2
     }
 }
 

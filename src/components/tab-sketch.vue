@@ -12,7 +12,7 @@ export default {
         this.$store.state.currentTool = 'sketch'
         this.emitter.on('drag', (pos) => {
             cv.line(this.$store.state.viewport.canvas_mat, pos.last, pos.current, this.color, 3, cv.LINE_AA)
-            this.$store.commit('viewport/render')
+            this.$store.commit('viewport/renderCanvas')
         })
     },
     unmounted(){
