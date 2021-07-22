@@ -13,14 +13,14 @@ export default {
     mounted() {
         this.$store.state.viewport.canvas = document.getElementById('main-canvas')
         window.addEventListener('resize', () => {
-            this.$store.commit('fitCanvas')
-            this.$store.commit('drawImage')
+            this.$store.commit('viewport/fitCanvas')
+            this.$store.commit('viewport/drawImage')
         })
 
-        this.$store.commit('fitCanvas')
-        this.$store.commit('newImage')
-        this.$store.commit('resetView')
-        this.$store.commit('drawImage')
+        this.$store.commit('viewport/fitCanvas')
+        this.$store.commit('viewport/newImage')
+        this.$store.commit('viewport/resetView')
+        this.$store.commit('viewport/drawImage')
     },
     beforeUnmount(){
         //window.removeEventListener('resize')
@@ -51,7 +51,7 @@ export default {
                 )
 
 
-            this.$store.commit('drawImage')
+            this.$store.commit('viewport/drawImage')
         },
         startDrawing(e){
             this.drawing = true
@@ -63,7 +63,7 @@ export default {
             
             cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.sketch.colorPicked, 3, cv.LINE_AA)
 
-            this.$store.commit('drawImage')
+            this.$store.commit('viewport/drawImage')
         },
         drag(e){
             if(!this.drawing)
@@ -73,10 +73,10 @@ export default {
             cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.sketch.colorPicked, 3, cv.LINE_AA)
             this.lastPos = newPos
 
-            this.$store.commit('drawImage')
+            this.$store.commit('viewport/drawImage')
         },
         offsetPosToImgPos(x, y){
-            let canvasSize = this.$store.getters.canvasSize
+            let canvasSize = this.$store.getters['viewport/canvasSize']
             let centerPos = this.$store.state.viewport.viewCenterPos
 
             return new cv.Point(

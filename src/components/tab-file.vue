@@ -21,9 +21,9 @@ export default {
             let img_container = document.getElementById('temp-img')
             img_container.onload = () => {
                 let img = cv.imread(img_container)
-                this.$store.commit('setImage', img)
-                this.$store.commit('resetView')
-                this.$store.commit('drawImage')
+                this.$store.commit('viewport/setImage', img)
+                this.$store.commit('viewport/resetView')
+                this.$store.commit('viewport/drawImage')
             }
     },
     methods: {
@@ -31,9 +31,9 @@ export default {
             document.getElementById('temp-img').src = URL.createObjectURL(e.target.files[0])
         },
         newImage(){
-            this.$store.commit('newImage')
-            this.$store.commit('resetView')
-            this.$store.commit('drawImage')
+            this.$store.commit('viewport/newImage')
+            this.$store.commit('viewport/resetView')
+            this.$store.commit('viewport/drawImage')
         },
         exportImage(){
             let c = document.createElement('canvas')
