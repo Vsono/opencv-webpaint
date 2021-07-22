@@ -12,12 +12,13 @@ export default {
     name: 'ViewPort',
     mounted() {
         this.$store.state.viewport.canvas = document.getElementById('main-canvas')
+        this.$store.state.viewport.overlay = document.getElementById('overlay')
         window.addEventListener('resize', () => {
-            this.$store.commit('viewport/fitCanvas')
+            this.$store.commit('viewport/fitView')
             this.$store.commit('viewport/drawImage')
         })
 
-        this.$store.commit('viewport/fitCanvas')
+        this.$store.commit('viewport/fitView')
         this.$store.commit('viewport/newImage')
         this.$store.commit('viewport/resetView')
         this.$store.commit('viewport/drawImage')

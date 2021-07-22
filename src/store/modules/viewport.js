@@ -2,17 +2,20 @@ let cv = require('opencv.js');
 
 const state = () => ({
     canvas: undefined,
+    overlay: undefined,
     imgmat: undefined,
     scale: 1,
     viewCenterPos: new cv.Point(0, 0),
 })
 
 const mutations = {
-    fitCanvas(state){
-        state.canvas.style.width = '100%';
-        state.canvas.style.height = '100%';
-        state.canvas.width = state.canvas.offsetWidth;
-        state.canvas.height = state.canvas.offsetHeight;
+    fitView(state){
+        [state.canvas, state.overlay].forEach((v) => {
+            v.style.width = '100%';
+            v.style.height = '100%';
+            v.width = v.offsetWidth;
+            v.height = v.offsetHeight;
+        })
     },
     newImage(state){
         if(state.imgmat != undefined){
