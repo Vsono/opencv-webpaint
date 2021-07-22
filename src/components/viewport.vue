@@ -10,7 +10,7 @@ let cv = require('opencv.js');
 export default {
     name: 'ViewPort',
     mounted() {
-        this.$store.state.mainCanvas = document.getElementById('main-canvas')
+        this.$store.state.viewport.canvas = document.getElementById('main-canvas')
         window.addEventListener('resize', () => {
             this.$store.commit('fitCanvas')
             this.$store.commit('drawImage')
@@ -37,14 +37,14 @@ export default {
                 return
             this.scale *= (1 + e.wheelDeltaY * 0.0008)
             let cursorPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
-            let oldCenterPos = this.$store.state.viewCenterPos
+            let oldCenterPos = this.$store.state.viewport.viewCenterPos
             if(e.wheelDeltaY > 0)
-                this.$store.state.viewCenterPos = new cv.Point(
+                this.$store.state.viewport.viewCenterPos = new cv.Point(
                     cursorPos.x * 0.1 + oldCenterPos.x * 0.9,
                     cursorPos.y * 0.1 + oldCenterPos.y * 0.9
                 )
             else
-                this.$store.state.viewCenterPos = new cv.Point(
+                this.$store.state.viewport.viewCenterPos = new cv.Point(
                     oldCenterPos.x * 1.1 - cursorPos.x * 0.1,
                     oldCenterPos.y * 1.1 - cursorPos.y * 0.1
                 )
@@ -60,7 +60,7 @@ export default {
             this.drawing = false
             let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             
-            cv.line(this.$store.state.imgmat, this.lastPos, newPos, this.$store.state.colorPicked, 3, cv.LINE_AA)
+            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.colorPicked, 3, cv.LINE_AA)
 
             this.$store.commit('drawImage')
         },
@@ -69,14 +69,14 @@ export default {
                 return
             let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             
-            cv.line(this.$store.state.imgmat, this.lastPos, newPos, this.$store.state.colorPicked, 3, cv.LINE_AA)
+            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.colorPicked, 3, cv.LINE_AA)
             this.lastPos = newPos
 
             this.$store.commit('drawImage')
         },
         offsetPosToImgPos(x, y){
             let canvasSize = this.$store.getters.canvasSize
-            let centerPos = this.$store.state.viewCenterPos
+            let centerPos = this.$store.state.viewport.viewCenterPos
 
             return new cv.Point(
                 ((x - canvasSize.width / 2) / this.scale) + centerPos.x,
@@ -87,10 +87,10 @@ export default {
     computed:{
         scale: { 
             get(){
-                return this.$store.state.scale
+                return this.$store.state.viewport.scale
             },
             set(val){
-                this.$store.state.scale = val
+                this.$store.state.viewport.scale = val
             }
         }
     }

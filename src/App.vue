@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import SideMenu from './components/side-menu.vue'
-import ViewPort from './components/view-port.vue'
+import SideMenu from './components/sidemenu.vue'
+import ViewPort from './components/viewport.vue'
 export default {
   name: 'App',
   components: {

@@ -37,7 +37,7 @@ export default {
         },
         exportImage(){
             let c = document.createElement('canvas')
-            let im = this.$store.state.imgmat
+            let im = this.$store.state.viewport.imgmat
             let id = new ImageData(new Uint8ClampedArray(im.data), im.cols, im.rows)
             c.width = id.width; c.height = id.height
             c.getContext('2d').putImageData(id, 0, 0)

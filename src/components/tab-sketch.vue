@@ -18,8 +18,6 @@ export default {
             let r = Math.round(i / (256 * 256))
             let g = Math.round((i % (256 * 256)) / 256)
             let b = Math.round(i % (256))
-            console.log(e.target.value)
-            console.log([r, g, b])
             this.$store.state.colorPicked = [r, g, b, 255]
         }
     }
