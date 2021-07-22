@@ -30,6 +30,9 @@ const mutations = {
         cv.rectangle(state.canvas_mat, new cv.Point(0, 0), new cv.Point(1280, 720), [255,255,255,255], -1)
         cv.rectangle(state.overlay_mat, new cv.Point(0, 0), new cv.Point(1280, 720), [0,0,0,0], -1)
     },
+    clearOverlay(state){
+        cv.rectangle(state.overlay_mat, new cv.Point(0, 0), new cv.Point(state.canvas_mat.cols, state.canvas_mat.rows), [0,0,0,0], -1)
+    },
     setImage(state, img){
         if(state.canvas_mat != undefined){
             state.canvas_mat.delete()
