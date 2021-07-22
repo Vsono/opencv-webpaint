@@ -60,7 +60,7 @@ export default {
             this.drawing = false
             let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             
-            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.colorPicked, 3, cv.LINE_AA)
+            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.sketch.colorPicked, 3, cv.LINE_AA)
 
             this.$store.commit('drawImage')
         },
@@ -69,7 +69,7 @@ export default {
                 return
             let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             
-            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.colorPicked, 3, cv.LINE_AA)
+            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.sketch.colorPicked, 3, cv.LINE_AA)
             this.lastPos = newPos
 
             this.$store.commit('drawImage')

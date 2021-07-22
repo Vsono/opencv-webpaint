@@ -18,7 +18,7 @@ export default {
             let r = Math.round(i / (256 * 256))
             let g = Math.round((i % (256 * 256)) / 256)
             let b = Math.round(i % (256))
-            this.$store.state.colorPicked = [r, g, b, 255]
+            this.$store.state.sketch.colorPicked = [r, g, b, 255]
         }
     }
 }

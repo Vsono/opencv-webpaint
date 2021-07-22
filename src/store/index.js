@@ -1,14 +1,14 @@
-// let cv = require('opencv.js');
 import { createStore } from 'vuex'
 import viewport from './modules/viewport.js'
+import sketch from './modules/sketch.js'
 
 export default createStore({
     modules: {
-        viewport: viewport
+        viewport: viewport,
+        sketch: sketch
     },
     state() {
         return {
-            colorPicked: [0, 0, 0, 255]
         }
     },
 })
