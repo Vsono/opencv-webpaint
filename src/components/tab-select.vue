@@ -7,6 +7,9 @@
 <script>
 export default {
     name: 'TabSelect',
+    mounted(){
+        this.$store.state.currentTool = 'select'
+    },
     methods: {
     }
 }

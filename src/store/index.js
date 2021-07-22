@@ -9,6 +9,7 @@ export default createStore({
     },
     state() {
         return {
+            currentTool: null
         }
     },
 })

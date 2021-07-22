@@ -7,6 +7,9 @@
 <script>
 export default {
     name: 'TabSketch',
+    mounted() {
+        this.$store.state.currentTool = 'sketch'
+    },
     data() { 
         return {
 
