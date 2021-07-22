@@ -28,6 +28,7 @@ export default {
     },
     data(){
         return {
+            startPos: null,
             lastPos: null,
             lbuttondown: false
         }
@@ -55,6 +56,8 @@ export default {
             this.$store.commit('viewport/drawImage')
         },
         mdown(e){
+            if(!this.lbuttondown)
+                this.startPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             this.lbuttondown = true
             this.lastPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
         },
@@ -62,13 +65,13 @@ export default {
             if(this.lbuttondown) {
                 this.lbuttondown = false
                 let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
-                this.emitter.emit('drag', [this.lastPos, newPos])
+                this.emitter.emit('drag', {start: this.startPos, last: this.lastPos, current: newPos})
             }
         },
         mmove(e){
             if(this.lbuttondown) {
                 let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
-                this.emitter.emit('drag', [this.lastPos, newPos])
+                this.emitter.emit('drag', {start: this.startPos, last: this.lastPos, current: newPos})
                 this.lastPos = newPos
             }
         },

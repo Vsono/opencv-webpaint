@@ -10,8 +10,8 @@ export default {
     name: 'TabSketch',
     mounted() {
         this.$store.state.currentTool = 'sketch'
-        this.emitter.on('drag', (args) => {
-            cv.line(this.$store.state.viewport.imgmat, args[0], args[1], this.color, 3, cv.LINE_AA)
+        this.emitter.on('drag', (pos) => {
+            cv.line(this.$store.state.viewport.imgmat, pos.last, pos.current, this.color, 3, cv.LINE_AA)
             this.$store.commit('viewport/drawImage')
         })
     },
