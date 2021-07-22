@@ -17,7 +17,6 @@ export default {
     mounted() {
         this.$store.state.currentTool = 'sketch'
         this.emitter.on('drag', (pos) => {
-            console.log(this.thickness)
             cv.line(this.$store.state.viewport.canvas_mat, pos.last, pos.current, this.color, parseInt(this.thickness), cv.LINE_AA)
             this.$store.commit('viewport/renderCanvas')
         })

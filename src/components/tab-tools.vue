@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="divider"></div>
-        <component :is="currentTabComponent" class="tab row" @filterSelected="filterSelected=true"></component>
+        <component :is="currentTabComponent" class="tab row" @filterSelected="filterSelected=true" @discard="discard"></component>
         
         <div class="btn-group">
             <button class="btn btn-dark applier" @click="apply" :disabled="!filterSelected">적용</button>
@@ -20,12 +20,14 @@
 </template>
 
 <script>
-import TabCvtcolor from './tab-cvt-color.vue'
+import TabCvtColor from './tab-cvt-color.vue'
+import TabEdgeDetection from './tab-edge-detection.vue'
 
 export default {
-    name: 'TabFilter',
+    name: 'TabTools',
     components: {
-        TabCvtcolor
+        TabCvtColor,
+        TabEdgeDetection
     },
     beforeUnmount(){
         this.discard()
@@ -33,7 +35,8 @@ export default {
     data() {
         return {
             tabs: [
-                ['색 변환', 'cvtColor']
+                ['색 변환', 'cvt-color'],
+                ['에지 검출', 'edge-detection'],
             ],
             currentTab: 'cvtColor',
             filterSelected: false,

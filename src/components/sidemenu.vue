@@ -17,14 +17,14 @@
 <script>
 import TabFile from './tab-file.vue'
 import TabEdit from './tab-edit.vue'
-import TabFilter from './tab-filter.vue'
+import TabTools from './tab-tools.vue'
 
 export default ({
     name: 'SideMenu',
     components: {
         TabFile,
         TabEdit,
-        TabFilter
+        TabTools
     },
     mounted() {
         
@@ -34,7 +34,7 @@ export default ({
             tabs: [
                 ['파일', 'File'], 
                 ['편집', 'Edit'], 
-                ['필터', 'Filter']
+                ['도구', 'Tools']
             ],
             currentTab: 'File'
         }
