@@ -7,8 +7,11 @@
 <script>
 export default {
     name: 'TabSelect',
-    mounted(){
+    mounted() {
         this.$store.state.currentTool = 'select'
+    },
+    unmounted(){
+        this.emitter.off('drag')
     },
     methods: {
     }

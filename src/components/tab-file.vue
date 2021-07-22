@@ -24,6 +24,7 @@ export default {
                 this.$store.commit('viewport/setImage', img)
                 this.$store.commit('viewport/resetView')
                 this.$store.commit('viewport/renderCanvas')
+                this.$store.commit('viewport/renderOverlay')
             }
     },
     methods: {

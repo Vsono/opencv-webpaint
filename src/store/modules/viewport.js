@@ -28,6 +28,7 @@ const mutations = {
         state.canvas_mat = Object.freeze(new cv.Mat(720, 1280, cv.CV_8UC4))
         state.overlay_mat = Object.freeze(new cv.Mat(720, 1280, cv.CV_8UC4))
         cv.rectangle(state.canvas_mat, new cv.Point(0, 0), new cv.Point(1280, 720), [255,255,255,255], -1)
+        cv.rectangle(state.overlay_mat, new cv.Point(0, 0), new cv.Point(1280, 720), [0,0,0,0], -1)
     },
     setImage(state, img){
         if(state.canvas_mat != undefined){
@@ -38,6 +39,7 @@ const mutations = {
         }
         state.canvas_mat = Object.freeze(img)
         state.overlay_mat = Object.freeze(new cv.Mat(state.canvas_mat.rows, state.canvas_mat.cols, cv.CV_8UC4))
+        cv.rectangle(state.overlay_mat, new cv.Point(0, 0), new cv.Point(state.canvas_mat.cols, state.canvas_mat.rows), [0,0,0,0], -1)
     },
     renderCanvas(state){
         //clear canvas
