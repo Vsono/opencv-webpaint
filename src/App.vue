@@ -17,7 +17,7 @@ export default {
     ViewPort
   },
   created(){
-    
+    document.addEventListener('contextmenu', event => event.preventDefault());
   },
   unmounted(){
 
