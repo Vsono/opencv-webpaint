@@ -3,7 +3,8 @@ let cv = require('opencv.js');
 const state = () => ({
     canvas: undefined,
     overlay: undefined,
-    imgmat: undefined,
+    canvas_mat: undefined,
+    overlay_mat: undefined,
     scale: 1,
     viewCenterPos: new cv.Point(0, 0),
 })
@@ -18,17 +19,17 @@ const mutations = {
         })
     },
     newImage(state){
-        if(state.imgmat != undefined){
-            state.imgmat.delete()
+        if(state.canvas_mat != undefined){
+            state.canvas_mat.delete()
         }
-        state.imgmat = Object.freeze(new cv.Mat(720, 1280, cv.CV_8UC4))
-        cv.rectangle(state.imgmat, new cv.Point(0, 0), new cv.Point(1280, 720), [255,255,255,255], -1)
+        state.canvas_mat = Object.freeze(new cv.Mat(720, 1280, cv.CV_8UC4))
+        cv.rectangle(state.canvas_mat, new cv.Point(0, 0), new cv.Point(1280, 720), [255,255,255,255], -1)
     },
     setImage(state, img){
-        if(state.imgmat != undefined){
-            state.imgmat.delete()
+        if(state.canvas_mat != undefined){
+            state.canvas_mat.delete()
         }
-        state.imgmat = Object.freeze(img)
+        state.canvas_mat = Object.freeze(img)
     },
     drawImage(state){
         //clear canvas
@@ -38,8 +39,8 @@ const mutations = {
 
         //convert and show image
         Promise.all([
-            createImageBitmap(new ImageData(new Uint8ClampedArray(state.imgmat.data),
-                state.imgmat.cols, state.imgmat.rows))
+            createImageBitmap(new ImageData(new Uint8ClampedArray(state.canvas_mat.data),
+                state.canvas_mat.cols, state.canvas_mat.rows))
         ])
         .then(function(sprs){
             state.canvas.getContext('2d').drawImage(sprs[0],
@@ -49,12 +50,12 @@ const mutations = {
         })
     },
     resetView(state){
-        let im = state.imgmat
+        let im = state.canvas_mat
         let cv = state.canvas
 
         state.scale = Math.max(0.1, Math.min(1, cv.width / im.cols, cv.height / im.rows))
-        state.viewCenterPos.x = state.imgmat.cols / 2
-        state.viewCenterPos.y = state.imgmat.rows / 2
+        state.viewCenterPos.x = state.canvas_mat.cols / 2
+        state.viewCenterPos.y = state.canvas_mat.rows / 2
     }
 }
 
