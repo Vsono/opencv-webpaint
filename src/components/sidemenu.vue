@@ -2,10 +2,10 @@
     <div class="sidemenu col vh-100">
         <div class="row">
             <div class="btn-group btn-group-toggle">
-                <label v-for="tab in tabs" :key="tab"
-                class="btn btn-dark" :class="{active: currentTab == tab}"
-                @click="currentTab = tab">
-                    {{ tab }}
+                <label v-for="tab in tabs" :key="tab[1]"
+                class="btn btn-dark" :class="{active: currentTab == tab[1]}"
+                @click="currentTab = tab[1]">
+                    {{ tab[0] }}
                 </label>
             </div>
         </div>
@@ -31,7 +31,11 @@ export default ({
     },
     data(){
         return {
-            tabs: ['File', 'Edit', 'Filter'],
+            tabs: [
+                ['파일', 'File'], 
+                ['편집', 'Edit'], 
+                ['필터', 'Filter']
+            ],
             currentTab: 'File'
         }
     },

@@ -2,10 +2,10 @@
     <div class="p-0">
         <div class="row">
             <div class="btn-group btn-group-toggle">
-                <label v-for="tab in tabs" :key="tab"
-                class="btn btn-dark" :class="{active: currentTab == tab}"
-                @click="currentTab = tab">
-                    {{ tab }}
+                <label v-for="tab in tabs" :key="tab[1]"
+                class="btn btn-dark" :class="{active: currentTab == tab[1]}"
+                @click="currentTab = tab[1]">
+                    {{ tab[0] }}
                 </label>
             </div>
         </div>
@@ -32,7 +32,9 @@ export default {
     },
     data() {
         return {
-            tabs: ['cvtColor'],
+            tabs: [
+                ['색 변환', 'cvtColor']
+            ],
             currentTab: 'cvtColor',
             filterSelected: false,
         }
