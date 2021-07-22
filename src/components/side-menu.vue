@@ -59,7 +59,7 @@ div{
     display: flex;
     flex-flow: column;
     
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(41, 41, 41);
     width: 300px;
     min-width: 300px;
     max-width: 300px;
