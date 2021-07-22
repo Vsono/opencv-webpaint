@@ -1,3 +1,5 @@
+// 코드 너무 더럽다
+
 let cv = require('opencv.js');
 
 const state = () => ({
