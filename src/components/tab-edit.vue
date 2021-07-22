@@ -27,10 +27,10 @@ export default {
     data(){
         return {
             tabs: [
-                ['선택', 'Select'],
-                ['스케치', 'Sketch']
+                ['스케치', 'Sketch'],
+                ['선택', 'Select']
             ],
-            currentTab: 'Select'
+            currentTab: 'Sketch'
         }
     },
     computed: {
