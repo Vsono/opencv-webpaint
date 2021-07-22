@@ -1,6 +1,12 @@
 <template>
     <div class="p-3">
-        <input type="color" value="#000" @change="watchColorPicker">
+        <label for="">색상: 
+            <input type="color" value="#000" @change="watchColorPicker">
+            </label>
+        <label for="">두께: 
+            <input type="range" min="1" max="150" v-model="thickness">
+            <input type="number" step="1" v-model="thickness">
+            </label>
     </div>
 </template>
 
@@ -11,7 +17,8 @@ export default {
     mounted() {
         this.$store.state.currentTool = 'sketch'
         this.emitter.on('drag', (pos) => {
-            cv.line(this.$store.state.viewport.canvas_mat, pos.last, pos.current, this.color, 3, cv.LINE_AA)
+            console.log(this.thickness)
+            cv.line(this.$store.state.viewport.canvas_mat, pos.last, pos.current, this.color, parseInt(this.thickness), cv.LINE_AA)
             this.$store.commit('viewport/renderCanvas')
         })
     },
@@ -20,7 +27,8 @@ export default {
     },
     data() { 
         return {
-            color: [0, 0, 0, 255]
+            color: [0, 0, 0, 255],
+            thickness: 3
         }
     },
     methods: {
@@ -41,6 +49,10 @@ export default {
 input[type='color'] {
     padding: 2px;
     height: 20px;
+}
+
+input[type='number'] {
+    width: 60px;
 }
 
 label{
