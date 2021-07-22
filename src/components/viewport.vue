@@ -1,6 +1,7 @@
 <template>
 <div class="viewport col vh-100">
-    <canvas id="main-canvas" @mousewheel="zoom" @mousedown="startDrawing" @mouseup="stopDrawing" @mousemove="drag"></canvas>
+    <canvas id="main-canvas" class="h-100"></canvas>
+    <canvas id="overlay" class="h-100" @mousewheel="zoom" @mousedown="startDrawing" @mouseup="stopDrawing" @mousemove="drag"></canvas>
     <div class="scale-indicator">{{ Math.round(scale * 100) }} %</div>
 </div>
 </template>
@@ -123,7 +124,12 @@ export default {
 
 #main-canvas {
     width: 100%;
+}
+
+#overlay {
+    width: 100%;
     /* cursor: url("/cursor.png") 10 10, crosshair; */
     cursor: crosshair;
 }
+
 </style>
