@@ -48,9 +48,9 @@ const mutations = {
         //convert and show image
         Promise.all([
             createImageBitmap(new ImageData(new Uint8ClampedArray(state.canvas_mat.data),
-                state.canvas_mat.cols, state.canvas_mat.rows),
+                state.canvas_mat.cols, state.canvas_mat.rows)),
             createImageBitmap(new ImageData(new Uint8ClampedArray(state.overlay_mat.data),
-                state.overlay_mat.cols, state.overlay_mat.rows)
+                state.overlay_mat.cols, state.overlay_mat.rows))
         ])
         .then(function(sprs){
             state.canvas.getContext('2d').drawImage(sprs[0],
