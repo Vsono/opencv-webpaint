@@ -23,7 +23,7 @@ export default {
                 let img = cv.imread(img_container)
                 this.$store.commit('viewport/setImage', img)
                 this.$store.commit('viewport/resetView')
-                this.$store.commit('viewport/drawImage')
+                this.$store.commit('viewport/render')
             }
     },
     methods: {
@@ -33,7 +33,7 @@ export default {
         newImage(){
             this.$store.commit('viewport/newImage')
             this.$store.commit('viewport/resetView')
-            this.$store.commit('viewport/drawImage')
+            this.$store.commit('viewport/render')
         },
         exportImage(){
             let c = document.createElement('canvas')

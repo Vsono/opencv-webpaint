@@ -15,13 +15,13 @@ export default {
         this.$store.state.viewport.overlay = document.getElementById('overlay')
         window.addEventListener('resize', () => {
             this.$store.commit('viewport/fitView')
-            this.$store.commit('viewport/drawImage')
+            this.$store.commit('viewport/render')
         })
 
         this.$store.commit('viewport/fitView')
         this.$store.commit('viewport/newImage')
         this.$store.commit('viewport/resetView')
-        this.$store.commit('viewport/drawImage')
+        this.$store.commit('viewport/render')
     },
     beforeUnmount(){
         //window.removeEventListener('resize')
@@ -53,7 +53,7 @@ export default {
                 )
 
 
-            this.$store.commit('viewport/drawImage')
+            this.$store.commit('viewport/render')
         },
         mdown(e){
             if(!this.lbuttondown)
