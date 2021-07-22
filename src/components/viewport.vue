@@ -1,7 +1,7 @@
 <template>
 <div class="viewport col vh-100">
     <canvas id="main-canvas" class="h-100"></canvas>
-    <canvas id="overlay" class="h-100" @mousewheel="zoom" @mousedown="startDrawing" @mouseup="stopDrawing" @mousemove="drag"></canvas>
+    <canvas id="overlay" class="h-100" @mousewheel="zoom" @mousedown="mdown" @mouseup="mup" @mousemove="mmove"></canvas>
     <div class="scale-indicator">{{ Math.round(scale * 100) }} %</div>
 </div>
 </template>
@@ -27,8 +27,8 @@ export default {
     },
     data(){
         return {
-            drawing: false,
             lastPos: null,
+            lbuttondown: false
         }
     },
     methods: {
@@ -53,27 +53,23 @@ export default {
 
             this.$store.commit('viewport/drawImage')
         },
-        startDrawing(e){
-            this.drawing = true
+        mdown(e){
+            this.lbuttondown = true
             this.lastPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
         },
-        stopDrawing(e){
-            this.drawing = false
-            let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
-            
-            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.sketch.colorPicked, 3, cv.LINE_AA)
-
-            this.$store.commit('viewport/drawImage')
+        mup(e){
+            if(this.lbuttondown) {
+                this.lbuttondown = false
+                let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
+                this.emitter.emit('drag', [this.lastPos, newPos])
+            }
         },
-        drag(e){
-            if(!this.drawing)
-                return
-            let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
-            
-            cv.line(this.$store.state.viewport.imgmat, this.lastPos, newPos, this.$store.state.sketch.colorPicked, 3, cv.LINE_AA)
-            this.lastPos = newPos
-
-            this.$store.commit('viewport/drawImage')
+        mmove(e){
+            if(this.lbuttondown) {
+                let newPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
+                this.emitter.emit('drag', [this.lastPos, newPos])
+                this.lastPos = newPos
+            }
         },
         offsetPosToImgPos(x, y){
             let canvasSize = this.$store.getters['viewport/canvasSize']

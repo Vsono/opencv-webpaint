@@ -5,23 +5,33 @@
 </template>
 
 <script>
+let cv = require('opencv.js');
 export default {
     name: 'TabSketch',
     mounted() {
         this.$store.state.currentTool = 'sketch'
+        this.emitter.on('drag', (args) => {
+            cv.line(this.$store.state.viewport.imgmat, args[0], args[1], this.color, 3, cv.LINE_AA)
+            this.$store.commit('viewport/drawImage')
+        })
+    },
+    unmounted(){
+        this.emitter.off('drag')
     },
     data() { 
         return {
-
+            color: [0, 0, 0, 255]
         }
     },
     methods: {
         watchColorPicker(e) {
             let i = parseInt(e.target.value.substr(1), 16)
-            let r = Math.round(i / (256 * 256))
-            let g = Math.round((i % (256 * 256)) / 256)
-            let b = Math.round(i % (256))
-            this.$store.state.sketch.colorPicked = [r, g, b, 255]
+            this.color = [
+                Math.round(i / (256 * 256)),
+                Math.round((i % (256 * 256)) / 256),
+                Math.round(i % (256)),
+                255
+            ]
         }
     }
 }
