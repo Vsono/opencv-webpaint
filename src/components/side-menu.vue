@@ -46,6 +46,10 @@ export default ({
     background-color: rgb(63, 63, 63);
     border-top: rgb(122, 122, 122) 1px solid;
 }
+
+.btn-dark { 
+    background-color: rgb(69, 67, 73);
+}
 </style>
 
 <style scoped>
