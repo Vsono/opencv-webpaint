@@ -9,6 +9,7 @@
                 </label>
             </div>
         </div>
+        <div class="divider"></div>
         <component :is="currentTabComponent" class="tab row"></component>
     </div>
 </template>

@@ -9,6 +9,7 @@
                 </label>
             </div>
         </div>
+        <div class="divider"></div>
         <component :is="currentTabComponent" class="tab row"></component>
     </div>
 </template>
@@ -16,16 +17,18 @@
 <script>
 import TabFile from './tab-file.vue'
 import TabEdit from './tab-edit.vue'
+import TabFilter from './tab-filter.vue'
 
 export default ({
     name: 'SideMenu',
     components: {
         TabFile,
-        TabEdit
+        TabEdit,
+        TabFilter
     },
     data(){
         return {
-            tabs: ['File', 'Edit'],
+            tabs: ['File', 'Edit', 'Filter'],
             currentTab: 'File'
         }
     },
@@ -36,6 +39,14 @@ export default ({
     }
 })
 </script>
+
+<style>
+.divider {
+    height: 2px;
+    background-color: rgb(63, 63, 63);
+    border-top: rgb(122, 122, 122) 1px solid;
+}
+</style>
 
 <style scoped>
 div{
