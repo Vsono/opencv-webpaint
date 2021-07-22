@@ -26,6 +26,9 @@ export default ({
         TabEdit,
         TabFilter
     },
+    mounted() {
+        
+    },
     data(){
         return {
             tabs: ['File', 'Edit', 'Filter'],

@@ -7,7 +7,8 @@
 <script>
 export default {
     name: 'TabSelect',
-
+    methods: {
+    }
 }
 </script>
 
