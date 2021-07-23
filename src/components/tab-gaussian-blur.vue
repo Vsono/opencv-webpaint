@@ -1,8 +1,8 @@
 <template>
     <div class="p-3">
         <label for="">커널 크기</label>
-        <input type="range" min="1" max="51" step="2" v-model="ksize" @change="gaussianblur">
-        <input type="number" min="1" max="51" step="2" v-model="ksize" @change="gaussianblur">
+        <input type="range" min="1" max="101" step="2" v-model="ksize" @change="gaussianblur">
+        <input type="number" min="1" max="101" step="2" v-model="ksize" @change="gaussianblur">
     </div>
 </template>
 

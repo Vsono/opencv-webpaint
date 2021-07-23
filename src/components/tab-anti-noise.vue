@@ -24,12 +24,14 @@
 <script>
 import TabAvgBlur from './tab-avg-blur.vue'
 import TabGaussianBlur from './tab-gaussian-blur.vue'
+import TabBilateralFilter from './tab-bilateral-filter.vue'
 
 export default {
     name: 'TabAntiNoise',
     components: {
         TabAvgBlur,
-        TabGaussianBlur
+        TabGaussianBlur,
+        TabBilateralFilter
     },
     beforeUnmount(){
         this.$emit('discard')
@@ -39,6 +41,7 @@ export default {
             tabs: [
                 ['평균 블러', 'avg-blur'],
                 ['가우시안 블러', 'gaussian-blur'],
+                ['바이레터럴 필터', 'bilateral-filter'],
             ],
             currentTab: '',
         }

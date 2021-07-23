@@ -23,11 +23,15 @@
 
 <script>
 import TabHarris from './tab-harris.vue'
+import TabHoughLine from './tab-hough-line.vue'
+import TabHoughCircle from './tab-hough-circle.vue'
 
 export default {
     name: 'TabEdgeDetection',
     components: {
-        TabHarris
+        TabHarris,
+        TabHoughLine,
+        TabHoughCircle
     },
     beforeUnmount(){
         this.$emit('discard')
@@ -36,6 +40,8 @@ export default {
         return {
             tabs: [
                 ['Harris 코너 검출', 'harris'],
+                ['허프 변환 -직선', 'hough-line'],
+                ['허프 변환 -원', 'hough-circle'],
             ],
             currentTab: '',
         }
