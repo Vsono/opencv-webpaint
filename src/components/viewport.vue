@@ -41,16 +41,10 @@ export default {
             this.scale *= (1 + e.wheelDeltaY * 0.0008)
             let cursorPos = this.offsetPosToImgPos(e.offsetX, e.offsetY)
             let oldCenterPos = this.$store.state.viewport.viewCenterPos
-            if(e.wheelDeltaY > 0)
-                this.$store.state.viewport.viewCenterPos = new cv.Point(
-                    cursorPos.x * 0.1 + oldCenterPos.x * 0.9,
-                    cursorPos.y * 0.1 + oldCenterPos.y * 0.9
-                )
-            else
-                this.$store.state.viewport.viewCenterPos = new cv.Point(
-                    oldCenterPos.x * 1.1 - cursorPos.x * 0.1,
-                    oldCenterPos.y * 1.1 - cursorPos.y * 0.1
-                )
+            this.$store.state.viewport.viewCenterPos = new cv.Point(
+                oldCenterPos.x * (1 - e.wheelDeltaY / 1000) + cursorPos.x * (e.wheelDeltaY / 1000),
+                oldCenterPos.y * (1 - e.wheelDeltaY / 1000) + cursorPos.y * (e.wheelDeltaY / 1000),
+            )
 
 
             this.$store.commit('viewport/renderCanvas')
