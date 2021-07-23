@@ -30,89 +30,51 @@ export default ({
         TabTools
     },
     mounted() {
-
-        //  ※※ 리팩터 필요 ※※
         this.emitter.on('draw-histogram', () => {
             let src = this.$store.state.viewport.canvas_mat
-            let tmp = new cv.Mat()
-            cv.cvtColor(src, tmp, cv.COLOR_RGBA2GRAY, 0);
-            let srcVec = new cv.MatVector();
             let rgbaPlanes = new cv.MatVector();
             cv.split(src, rgbaPlanes);
-            srcVec.push_back(tmp);
-            let accumulate = false;
-            let channels = [0];
-            let histSize = [256];
-            let ranges = [0, 255];
-            let hist = new cv.Mat();
-            let mask = new cv.Mat();
-            let color = new cv.Scalar(255, 0, 0, 255);
-            let scale = 1;
-            // You can try more different parameters
-            cv.calcHist(srcVec, channels, mask, hist, histSize, ranges, accumulate);
-            let result = cv.minMaxLoc(hist, mask);
-            let max = result.maxVal;
-            let dst = new cv.Mat(tmp.rows, histSize[0] * scale,
-                                    cv.CV_8UC4);
-            cv.rectangle(dst, new cv.Point(0, 0), new cv.Point(dst.cols, dst.rows), [0, 0, 0, 255], cv.FILLED)
-            // draw histogram
-            let point1 = new cv.Point(0, 0)
-            for (let i = 0; i < histSize[0]; i++) {
-                let binVal = hist.data32F[i] * tmp.rows / max;
-                let point2 = new cv.Point((i + 1) * scale - 1, tmp.rows - binVal);
-                cv.line(dst, point1, point2, color, 1, cv.LINE_AA);
-                point1 = point2
-            }
-
-
-            accumulate = false;
-            histSize = [256];
-            ranges = [0, 255];
-            hist = new cv.Mat();
-            mask = new cv.Mat();
-            color = new cv.Scalar(0, 255, 0, 255);
-            scale = 1;
-            channels[0] = 1
-            cv.calcHist(rgbaPlanes, channels, mask, hist, histSize, ranges, accumulate);
-            result = cv.minMaxLoc(hist, mask);
-            max = result.maxVal;
-            // draw histogram
-            point1 = new cv.Point(0, 0)
-            for (let i = 0; i < histSize[0]; i++) {
-                let binVal = hist.data32F[i] * tmp.rows / max;
-                let point2 = new cv.Point((i + 1) * scale - 1, tmp.rows - binVal);
-                cv.line(dst, point1, point2, color, 1, cv.LINE_AA);
-                point1 = point2
-            }
-
             
+            let histSize = [256];
+            let scale = 1;
+            let mask = new cv.Mat();
 
-            accumulate = false;
-            histSize = [256];
-            ranges = [0, 255];
-            hist = new cv.Mat();
-            mask = new cv.Mat();
-            color = new cv.Scalar(0, 0, 255, 255);
-            scale = 1;
-            channels[0] = 2
-            cv.calcHist(rgbaPlanes, channels, mask, hist, histSize, ranges, accumulate);
-            result = cv.minMaxLoc(hist, mask);
-            max = result.maxVal;
-            // draw histogram
-            point1 = new cv.Point(0, 0)
-            for (let i = 0; i < histSize[0]; i++) {
-                let binVal = hist.data32F[i] * tmp.rows / max;
-                let point2 = new cv.Point((i + 1) * scale - 1, tmp.rows - binVal);
-                cv.line(dst, point1, point2, color, 1, cv.LINE_AA);
-                point1 = point2
+            let max = 0
+            let hists = []
+            for(let i = 0; i < 3; i++){
+                let channels = [i];
+                let hist = new cv.Mat();
+                cv.calcHist(rgbaPlanes, channels, mask, hist, histSize, [0, 255]);
+
+                let result = cv.minMaxLoc(hist);
+                if(result.maxVal > max)
+                    max = result.maxVal
+                
+                hists.push(hist)
             }
 
+            //히스토그램 그리기
+            let dst = new cv.Mat(src.rows, histSize[0] * scale, cv.CV_8UC4);
+            cv.rectangle(dst, new cv.Point(0, 0), new cv.Point(dst.cols, dst.rows), [0, 0, 0, 255], cv.FILLED)
+            hists.forEach((hist, i) => {
+                let color = [0,0,0,255]
+                color[i] = 255
+                let point1 = new cv.Point(0, 0)
+                for (let x = 0; x < histSize[0]; x++){
+                    let binVal = hist.data32F[x] * src.rows / max;
+                    let point2 = new cv.Point((x + 1) * scale - 1, src.rows - binVal);
+                    cv.line(dst, point1, point2, color, 1, cv.LINE_AA);
+                    point1 = point2
+                }
+            })
 
             cv.imshow('histogram', dst);
-            tmp.delete(); dst.delete(); srcVec.delete(); mask.delete(); hist.delete();
+
+            mask.delete()
+            dst.delete();
+            hists.forEach((hist)=>{hist.delete()})
 
         })
-        //this.drawHistogram()
     },
     data(){
         return {
