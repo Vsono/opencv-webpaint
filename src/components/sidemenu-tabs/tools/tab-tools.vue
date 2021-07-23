@@ -21,15 +21,15 @@
 
 <script>
 import TabCvtColor from './tab-cvt-color.vue'
-import TabAntiNoise from './tab-anti-noise.vue'
-import TabEdgeDetection from './tab-edge-detection.vue'
-import TabDetection from './tab-detection.vue'
+import TabDenoise from './denoise/tab-denoise.vue'
+import TabEdgeDetection from './edge-detection/tab-edge-detection.vue'
+import TabDetection from './detection/tab-detection.vue'
 
 export default {
     name: 'TabTools',
     components: {
         TabCvtColor,
-        TabAntiNoise,
+        TabDenoise,
         TabEdgeDetection,
         TabDetection
     },
@@ -40,7 +40,7 @@ export default {
         return {
             tabs: [
                 ['색 변환', 'cvt-color'],
-                ['노이즈 제거', 'anti-noise'],
+                ['노이즈 제거', 'denoise'],
                 ['에지 추출', 'edge-detection'],
                 ['검출', 'detection'],
             ],

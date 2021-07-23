@@ -27,7 +27,7 @@ import TabGaussianBlur from './tab-gaussian-blur.vue'
 import TabBilateralFilter from './tab-bilateral-filter.vue'
 
 export default {
-    name: 'TabAntiNoise',
+    name: 'TabDenoise',
     components: {
         TabAvgBlur,
         TabGaussianBlur,

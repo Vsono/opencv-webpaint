@@ -17,9 +17,9 @@
 
 <script>
 
-import TabFile from './tab-file.vue'
-import TabEdit from './tab-edit.vue'
-import TabTools from './tab-tools.vue'
+import TabFile from './sidemenu-tabs/file/tab-file.vue'
+import TabEdit from './sidemenu-tabs/edit/tab-edit.vue'
+import TabTools from './sidemenu-tabs/tools/tab-tools.vue'
 import Histogram from './histogram.vue'
 
 export default ({
