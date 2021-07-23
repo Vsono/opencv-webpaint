@@ -22,14 +22,14 @@
 </template>
 
 <script>
-import TabEdgeCanny from './tab-edge-canny.vue'
-import TabEdgeLaplacian from './tab-edge-laplacian.vue'
+import TabAvgBlur from './tab-avg-blur.vue'
+import TabGaussianBlur from './tab-gaussian-blur.vue'
 
 export default {
-    name: 'TabEdgeDetection',
+    name: 'TabAntiNoise',
     components: {
-        TabEdgeLaplacian,
-        TabEdgeCanny,
+        TabAvgBlur,
+        TabGaussianBlur
     },
     beforeUnmount(){
         this.$emit('discard')
@@ -37,8 +37,8 @@ export default {
     data() {
         return {
             tabs: [
-                ['라플라시안 필터', 'edge-laplacian'],
-                ['캐니', 'edge-canny'],
+                ['평균 블러', 'avg-blur'],
+                ['가우시안 블러', 'gaussian-blur'],
             ],
             currentTab: '',
         }

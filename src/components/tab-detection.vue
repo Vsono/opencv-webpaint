@@ -22,14 +22,12 @@
 </template>
 
 <script>
-import TabEdgeCanny from './tab-edge-canny.vue'
-import TabEdgeLaplacian from './tab-edge-laplacian.vue'
+import TabHarris from './tab-harris.vue'
 
 export default {
     name: 'TabEdgeDetection',
     components: {
-        TabEdgeLaplacian,
-        TabEdgeCanny,
+        TabHarris
     },
     beforeUnmount(){
         this.$emit('discard')
@@ -37,8 +35,7 @@ export default {
     data() {
         return {
             tabs: [
-                ['라플라시안 필터', 'edge-laplacian'],
-                ['캐니', 'edge-canny'],
+                ['Harris 코너 검출', 'harris'],
             ],
             currentTab: '',
         }
