@@ -1,17 +1,19 @@
 <template>
     <div class="sidemenu col vh-100">
-        <div class="row">
-            <div class="btn-group btn-group-toggle">
-                <label v-for="tab in tabs" :key="tab[1]"
-                class="btn btn-dark" :class="{active: currentTab == tab[1]}"
-                @click="currentTab = tab[1]">
-                    {{ tab[0] }}
-                </label>
+        <div class="controller-wrapper h-100">
+            <div class="row">
+                <div class="btn-group btn-group-toggle">
+                    <label v-for="tab in tabs" :key="tab[1]"
+                    class="btn btn-dark" :class="{active: currentTab == tab[1]}"
+                    @click="currentTab = tab[1]">
+                        {{ tab[0] }}
+                    </label>
+                </div>
             </div>
+            <div class="divider"></div>
+            <component :is="currentTabComponent" class="tab row"></component>
         </div>
-        <div class="divider"></div>
-        <component :is="currentTabComponent" class="tab row"></component>
-        <histogram></histogram>
+        <histogram id="histogram" @click="drawHistogram"></histogram>
     </div>
 </template>
 
@@ -83,10 +85,20 @@ div{
     width: 400px;
     min-width: 400px;
     max-width: 400px;
+    position: relative;
 }
 
 .active {
     background-color: black;
+}
+
+.controller-wrapper {
+    overflow: auto;
+}
+
+#histogram {
+    bottom: 0;
+    height: 200px;
 }
 
 </style>

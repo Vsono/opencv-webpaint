@@ -63,8 +63,8 @@ export default {
 
 #histogram{
     background-color: rgb(87, 87, 87);
-    width: 100%;
-    height: 200px;
+    padding: 0;
+    margin: 0;
 }
 
 </style>
