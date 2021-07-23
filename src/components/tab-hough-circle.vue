@@ -95,5 +95,10 @@ export default {
 <style scoped>
 input[type="number"] {
     margin-bottom: 20px;
+    width: 20%;
+}
+input[type="range"] {
+    margin-bottom: 20px;
+    width: 80%;
 }
 </style>

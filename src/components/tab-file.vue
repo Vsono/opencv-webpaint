@@ -25,6 +25,7 @@ export default {
                 this.$store.commit('viewport/resetView')
                 this.$store.commit('viewport/renderCanvas')
                 this.$store.commit('viewport/renderOverlay')
+                this.emitter.emit('draw-histogram')
             }
     },
     methods: {
@@ -36,6 +37,7 @@ export default {
             this.$store.commit('viewport/resetView')
             this.$store.commit('viewport/renderCanvas')
             this.$store.commit('viewport/renderOverlay')
+            this.emitter.emit('draw-histogram')
         },
         exportImage(){
             let c = document.createElement('canvas')

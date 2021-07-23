@@ -19,6 +19,9 @@ export default {
         this.emitter.on('drag', (pos) => {
             cv.line(this.$store.state.viewport.canvas_mat, pos.last, pos.current, this.color, parseInt(this.thickness), cv.LINE_AA)
             this.$store.commit('viewport/renderCanvas')
+
+            
+            this.emitter.emit('draw-histogram')
         })
     },
     unmounted(){

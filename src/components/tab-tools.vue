@@ -58,6 +58,7 @@ export default {
             this.$store.commit('viewport/clearOverlay')
             this.$store.commit('viewport/renderOverlay')
             this.$store.commit('viewport/renderCanvas')
+            this.emitter.emit('draw-histogram')
         },
         discard(){
             this.filterSelected = false
@@ -95,6 +96,6 @@ div{
 }
 
 .applier{
-    margin-top: 50px;
+    margin-top: 10px;
 }
 </style>
